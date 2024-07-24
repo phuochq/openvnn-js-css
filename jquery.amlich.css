@@ -7,7 +7,7 @@
 .calendar td { background-color: #e9eff3;  }
 .calendar-month {
   background-color: #1e8cbe !important;
-  color: #fff; text-shadow: 0px 0px 3px #000;
+  color: #fff !important; text-shadow: 0px 0px 3px #000;
   padding: 6px; font-weight: bold; text-transform: uppercase;
   font-size: 14px !important;
 }
