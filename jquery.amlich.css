@@ -1,31 +1,86 @@
-<style type="text/css">
-<!--
-  sub {color:blue}
-  a:link {color: #0066cc; TEXT-DECORATION: none}
-  a:visited {color: #0066cc;  text-decoration:none; }
-  .tennam {text-align:center; font-size:150%; line-height:120%; font-weight:bold; color:#000000; background-color: #CCCCCC}
-  .thang {font-size: 11pt; padding:1; font-family:Tahoma,Verdana,Arial; table-layout:fixed}
-  .tenthang {text-align:center; font-size:125%; line-height:100%; font-weight:bold; color:#330033; background-color: #CCFFCC}
-  .navi-l {text-align:center; font-size:100%; line-height:100%; font-weight:bold;  background-color: #CCCC99}
-  .navi-r {text-align:center; font-size:75%; line-height:100%; font-family:Verdana,Arial,Times New Roman; font-weight:bold; color:#330033; background-color: #CCFFCC}
-  .ngaytuan {width:14%; text-align:center; font-weight:bold; font-size:110%; line-height:100%; color:#330033; background-color: #FFFFCC}
-  .ngaythang {background-color:#FDFDF0}
-  .homnay {background-color:#FFF000}
-  .tet {background-color:#FFCC99}
-  .am {text-align:right;font-size:80%;line-height:80%;color:blue}
-  .am2 {text-align:right;font-size:80%;line-height:80%;color:#004080}
-  .t2t6 {text-align:left;font-size:110%;color:black}
-  .t7 {text-align:left;font-size:110%;line-height:100%;color:green}
-  .cn {text-align:left;font-size:110%;line-height:100%;color:red}
-  .thangduong{text-align:center;font-size:150%; font-weight:bold; color:#330033; background-color: #CCFFCC}
-  .ngayduong{text-align:center;font-size:400%;font-weight:bold}
-  .thuduong{text-align:center;font-size:125%;font-weight:bold; text-decoration:underline}
-  .thangam{text-align:center;font-size:80%;color:black}
-  .ngayam{text-align:center;font-size:160%;color:black}
-  .gioam{text-align:center;font-size:80%;color:black}
-  .canchi {vertical-align:top}
-  .normal {vertical-align:top; line-height:100%}
-  .hoangdao {font-size:80%}
-  .info{text-align:center;font-size:100%;color:#FF33CC}
--->
-</style>
+.amlich {
+  border-collapse: collapse;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+}
+.calendar { font-size: 12px; }
+.calendar td { background-color: #e9eff3;  }
+.calendar-month {
+  background-color: #1e8cbe !important;
+  color: #fff; text-shadow: 0px 0px 3px #000;
+  padding: 6px; font-weight: bold; text-transform: uppercase;
+  font-size: 14px !important;
+}
+.amlich-tennam {
+  text-align: center;
+  font-weight: bold;
+  color: #000000;
+  background-color: #CCCCCC;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+}
+.amlich .calendar-month,
+.amlich .calendar-b-left,
+.amlich .calendar-b-right { text-align: center; padding: 4px 0; font-size: 11px; }
+.amlich .calendar-day { text-align: center; font-weight: bold; }
+.amlich .calendar-day .day-num { font-size: 80px; font-family: Roboto, sans-serif; line-height: 100%; color: #31708f; }
+.amlich .lunar-day-num { font-size: 44px; line-height: 100%; font-weight: bold; color: #3c763d; }
+.amlich .calendar-holiday,
+.amlich .calendar-hoangdao { padding: 0 4px 4px 4px; font-size: 11px; text-align: center; }
+.amlich .calendar-holiday { color: #a94442; font-weight: bold; }
+.amlich a { text-decoration: none; color: white; }
+.amlich a:hover { color: red; }
+.amlich .tenthang,
+.amlich .navi-l,
+.amlich .navi-r {
+  text-align: center;
+  padding: 6px;
+  background-color: #1e8cbe;
+  color: #fff;
+  font-weight: bold;
+}
+.amlich .tenthang { text-shadow: 0px 0px 3px #000; }
+.amlich .navi-l { font-size: 12px; }
+.amlich .navi-r { font-size: 12px; }
+.amlich .ngaytuan {
+  text-align: center;
+  color: #330033;
+  background-color: #ddd;
+  padding: 3px;
+  width: 14.286%;
+  font-size: 10px; font-weight: bold;
+}
+.amlich .ngaythang,
+.amlich .homnay,
+.amlich .tet,
+.amlich .leam,
+.amlich .leduong {
+  cursor: pointer;
+  border-bottom: solid 1px #eee;
+  padding: 3px;
+  width: 14.286%;
+}
+.amlich .ngaythang div,
+.amlich .homnay div,
+.amlich .tet div,
+.amlich .leam div,
+.amlich .leduong div { line-height: 110%; }
+.amlich .ngaythang { color: #5a5c5b; }
+.amlich tr:nth-child(odd) td.ngaythang:nth-child(odd) { background-color: #f9f9f9; }
+.amlich tr:nth-child(odd) td.ngaythang:nth-child(even) { background-color: #fff; }
+.amlich tr:nth-child(even) td.ngaythang:nth-child(odd) { background-color: #fff; }
+.amlich tr:nth-child(even) td.ngaythang:nth-child(even) { background-color: #f9f9f9; }
+.amlich tr td.ngaythang:hover { background-color: #f5f5f5 !important }
+.amlich .homnay { background-color: #fcf8e3; color: #fff; }
+.amlich .homnay:hover { background-color: #faf2cc; }
+.amlich .tet { background-color: #f2dede; }
+.amlich .tet:hover { background-color: #ebcccc }
+.amlich .leam { background-color: #d9edf7; }
+.amlich .leam:hover { background-color: #c4e3f3 }
+.amlich .leduong { background-color: #dff0d8; }
+.amlich .leduong:hover { background-color: #d0e9c6 }
+.amlich .am { text-align: right; font-size: 75%; color: #554C00; }
+.amlich .am2 { text-align: right; font-size: 75%; color: #337ab7; font-weight: bold; }
+.amlich .t2t6 { text-align: left; color: #5a5c5b; font-weight: bold; }
+.amlich .t7 { font-weight: bold; text-align: left; color: blue; }
+.amlich .cn { font-weight: bold; text-align: left; color: red; }
