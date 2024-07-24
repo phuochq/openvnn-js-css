@@ -31,7 +31,7 @@
 .amlich .calendar-holiday,
 .amlich .calendar-hoangdao { padding: 0 4px 4px 4px; font-size: 11px; text-align: center; }
 .amlich .calendar-holiday { color: #a94442; font-weight: bold; }
-.amlich a { text-decoration: none; color: white; }
+.amlich a { text-decoration: none; color: white !important; }
 .amlich a:hover { color: red; }
 .amlich .tenthang,
 .amlich .navi-l,
