@@ -1,5 +1,4 @@
-<script>
-function convertSolarToLunar()
+(function convertSolarToLunar()
 {
 var dd, mm, yy, sd, ld;
 dd = document.getElementById("S_DD").value-0;
@@ -79,4 +78,4 @@ function computeSolarDates() {
 	res += '</table>';
 	document.getElementById("conversion_result").innerHTML = res;
 }
-</script>
+)
