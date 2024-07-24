@@ -72,8 +72,8 @@
 .amlich tr:nth-child(even) td.ngaythang:nth-child(odd) { background-color: #fff; }
 .amlich tr:nth-child(even) td.ngaythang:nth-child(even) { background-color: #f9f9f9; }
 .amlich tr td.ngaythang:hover { background-color: #f5f5f5 !important }
-.amlich .homnay { background-color: #fcf8e3; color: #fff; }
-.amlich .homnay:hover { background-color: #faf2cc; }
+.amlich .homnay { background-color: #f2b75f; color: #fff; }
+.amlich .homnay:hover { background-color: #b7da31; }
 .amlich .tet { background-color: #f2dede; }
 .amlich .tet:hover { background-color: #ebcccc }
 .amlich .leam { background-color: #d9edf7; }
