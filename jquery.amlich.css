@@ -3,7 +3,7 @@
   font-size: 14px;
   font-family: Roboto, sans-serif;
 }
-.amlich a:limk{
+.amlich navi-l,navi-r a:link{
   color: #ff3d00 !important;
 }
 .calendar { font-size: 12px; }
