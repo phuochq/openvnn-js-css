@@ -592,7 +592,7 @@
         res += '          <td width="50%" class="calendar-b-left" valign="top">\n';
         res += '            <span class="lunar-month-name">Tháng '+THANG[currentLunarDate.month-1]+'</span><br>\n';
         res += '            <span class="lunar-day-num">'+currentLunarDate.day+'</span><br>\n';
-        res += '            <span class="lunar-year-name"><strong>'+cc[2]+'</strong></span>\n';
+        res += '            <span class="lunar-year-name"><strong>Năm '+cc[2]+'</strong></span>\n';
         res += '          </td>\n';
         res += '          <td width="50%" class="calendar-b-right" valign="top">\n';
         res += '            <span>Ngày <strong>'+cc[0]+'</strong></span><br>\n';
