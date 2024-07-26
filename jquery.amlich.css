@@ -70,7 +70,7 @@
 .amlich tr:nth-child(odd) td.ngaythang:nth-child(even) { background-color: #fff; }
 .amlich tr:nth-child(even) td.ngaythang:nth-child(odd) { background-color: #fff; }
 .amlich tr:nth-child(even) td.ngaythang:nth-child(even) { background-color: #f9f9f9; }
-.amlich tr td.ngaythang:hover { background-color: #f5f5f5 !important }
+.amlich tr td.ngaythang:hover { background-color: #d1c687 !important }
 .amlich .homnay { background-color: #d7c877; color: #fff; }
 .amlich .homnay:hover { background-color: #faf2cc; }
 .amlich .tet { background-color: #f2dede; }
