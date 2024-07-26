@@ -538,13 +538,13 @@
   function getPrevMonthLink(mm, yy) {
     var mm1 = mm > 1 ? mm-1 : 12;
     var yy1 = mm > 1 ? yy : yy-1;
-    return '<a class="prev-month" data-yy="'+yy1+'" data-mm="'+mm1+'" href="#">&nbsp;&lsaquo;&nbsp;</a>';
+    return '<a class="prev-month" data-yy="'+yy1+'" data-mm="'+mm1+'" href="#">◄</a>';
   }
 
   function getNextMonthLink(mm, yy) {
     var mm1 = mm < 12 ? mm+1 : 1;
     var yy1 = mm < 12 ? yy : yy+1;
-    return '<a class="next-month" data-yy="'+yy1+'" data-mm="'+mm1+'" href="#">&nbsp;&rsaquo;&nbsp;</a>';
+    return '<a class="next-month" data-yy="'+yy1+'" data-mm="'+mm1+'" href="#">►</a>';
   }
 
   function getPrevYearLink(mm, yy) {
