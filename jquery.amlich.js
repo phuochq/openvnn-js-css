@@ -548,16 +548,16 @@
   }
 
   function getPrevYearLink(mm, yy) {
-    return '<a class="prev-year" data-yy="'+(yy-1)+'" data-mm="'+mm+'" href="#">&lsaquo;&lsaquo;</a>';
+    return '<a class="prev-year" data-yy="'+(yy-1)+'" data-mm="'+mm+'" href="#">◄◄</a>';
   }
 
   function getNextYearLink(mm, yy) {
-    return '<a class="next-year" data-yy="'+(yy+1)+'" data-mm="'+mm+'" href="#">&rsaquo;&rsaquo;</a>';
+    return '<a class="next-year" data-yy="'+(yy+1)+'" data-mm="'+mm+'" href="#">►►</a>';
   }
 
   function printHead(mm, yy) {
     var res = "";
-    var monthName = mm+"/"+yy;
+    var monthName ="Lịch âm dương"+mm+"năm"+yy;
 
     switch ( settings.type ) {
       case 'month':
