@@ -7,7 +7,7 @@
 .calendar td { background-color: #e9eff3;  }
 .calendar-month {
   background-color: #1e8cbe !important;
-  color: #fff; text-shadow: 0px 0px 3px #000;
+  color: #fff !important; text-shadow: 0px 0px 3px #000;
   padding: 6px; font-weight: bold; text-transform: uppercase;
   font-size: 14px !important;
 }
@@ -28,7 +28,7 @@
 .amlich .calendar-holiday,
 .amlich .calendar-hoangdao { padding: 0 4px 4px 4px; font-size: 11px; text-align: center; }
 .amlich .calendar-holiday { color: #a94442; font-weight: bold; }
-.amlich a { text-decoration: none; color: white; }
+.amlich a { text-decoration: none; color: white !important; }
 .amlich a:hover { color: red; }
 .amlich .tenthang,
 .amlich .navi-l,
