@@ -56,7 +56,7 @@
 .amlich .leam,
 .amlich .leduong {
   cursor: pointer;
-  border-bottom: solid 1px #eee;
+  border: solid 1px #9a9191;
   padding: 3px;
   width: 14.286%;
 }
