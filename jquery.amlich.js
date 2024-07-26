@@ -557,7 +557,7 @@
 
   function printHead(mm, yy) {
     var res = "";
-    var monthName ="Lịch âm dương"+mm+"năm"+yy;
+    var monthName ="Lịch âm dương "+mm+" năm "+yy;
 
     switch ( settings.type ) {
       case 'month':
