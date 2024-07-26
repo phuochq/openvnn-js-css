@@ -141,7 +141,7 @@
         'Đông chí', 'Tiểu hàn', 'Đại hàn', 'Lập xuân', 'Vũ thủy', 'Kinh trập'
       ],
       THANG = ['Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười', 'Mười một', 'Mười hai'],
-      DAYNAMES = ['CN','T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+      DAYNAMES = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7','CN'],
       LE = {
         solar: [
           { d:  1, m:  1, i: 'Tết Dương lịch' },
@@ -506,7 +506,7 @@
     var currentMonth = getMonth(mm, yy);
     if (currentMonth.length == 0) return false;
     var ld1 = currentMonth[0];
-    var emptyCells = (ld1.jd + 1) % 7;
+    var emptyCells = (ld1.jd + 0) % 7;
     var MonthHead = mm + "/" + yy;
     var LunarHead = getYearCanChi(ld1.year);
     var res = "";
