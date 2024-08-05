@@ -557,7 +557,7 @@
 
   function printHead(mm, yy) {
     var res = "";
-    var monthName ="Lịch âm dương" + '</br>' +"tháng "+mm+" năm "+yy;
+    var monthName ="Lịch âm dương" + '</br>' +"tháng "+'<input name="yy" size="3" value="'+mm+'2024">'+mm+" năm "+yy;
 
     switch ( settings.type ) {
       case 'month':
