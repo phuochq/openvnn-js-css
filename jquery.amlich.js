@@ -627,7 +627,7 @@
   }
 function printunder(mm, yy) {
     var res = "";
-    var monthName ="Lịch âm dương" + '</br>' +"tháng "+'<input name="mm" size="3" value="'+mm+'">'+" năm "+'<input name="yy" size="3" value="'+yy+'">';
+    var monthName ="Tháng "+'<input name="mm" size="3" value="'+mm+'">'+" năm "+'<input name="yy" size="3" value="'+yy+'">';
 
     switch ( settings.type ) {
       case 'month':
