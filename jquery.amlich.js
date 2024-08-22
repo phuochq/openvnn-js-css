@@ -530,6 +530,7 @@
       }
       res += '</tr>\n';
     }
+    res += printunder(mm, yy);
     res += '</tbody>\n';
     res += '</table>\n';
     return res;
@@ -624,7 +625,32 @@
     res += '</tr>\n';
     return res;
   }
+function printunder(mm, yy) {
+    var res = "";
+    var monthName ="Lịch âm dương" + '</br>' +"tháng "+'<input name="mm" size="3" value="'+mm+'">'+" năm "+'<input name="yy" size="3" value="'+yy+'">';
 
+    switch ( settings.type ) {
+      case 'month':
+        res += '<tr>\n';
+        res += '</tr>\n';
+        break;
+      case 'year':
+        res += '<tr>\n';
+        res += '</tr>\n';
+        break;
+      case 'calendar':
+        var cc = getCanChi(currentLunarDate),
+            holiday = getHolodayString( today.getDate(), (today.getMonth()+1), currentLunarDate.day, currentLunarDate.month );
+
+        res += '  <td colspan="2" class="navi-l">'+getPrevYearLink(mm, yy)+' &nbsp;'+getPrevMonthLink(mm, yy)+'</td>\n';
+        res += '  <td colspan="3" class="tenthang">'+monthName+'</td>\n';
+        res += '  <td colspan="2" class="navi-r">'+getNextMonthLink(mm, yy)+' &nbsp;'+getNextYearLink(mm, yy)+'</td></tr>\n';
+        res += '</tr>\n';
+        break;
+    }
+    
+    return res;
+  }
   function checkHolidaySolar( dd, mm ) {
     var res = '';
     $.each( LE.solar, function( k, item ) {
