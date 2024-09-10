@@ -521,9 +521,6 @@
       }
       res += '</tr>\n';
     }
-    res += '<tr>\n';
-    res += '  <td colspan="3" class="tenthang">'+monthName+'</td>\n';
-    res += '</tr>\n';
     res += '</tbody>\n';
     res += '</table>\n';
     return res;
