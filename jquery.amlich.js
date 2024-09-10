@@ -124,7 +124,7 @@
       ), /* Years 2100-2199 */
       CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'],
       CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'],
-      TUAN = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'],
+      TUAN = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
       GIO_HD = ['110100101100', '001101001011', '110011010010', '101100110100', '001011001101', '010010110011'],
       TIETKHI = ['Xuân phân', 'Thanh minh', 'Cốc vũ', 'Lập hạ', 'Tiểu mãn', 'Mang chủng',
         'Hạ chí', 'Tiểu thử', 'Đại thử', 'Lập thu', 'Xử thử', 'Bạch lộ',
@@ -132,7 +132,7 @@
         'Đông chí', 'Tiểu hàn', 'Đại hàn', 'Lập xuân', 'Vũ thủy', 'Kinh trập'
       ],
       THANG = ['Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười', 'Mười một', 'Mười hai'],
-      DAYNAMES = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+      DAYNAMES = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
       LE = {
         solar: [
           { d:  1, m:  1, i: 'Tết Dương lịch' },
