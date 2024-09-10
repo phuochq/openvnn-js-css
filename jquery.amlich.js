@@ -548,7 +548,7 @@
 
   function printHead(mm, yy) {
     var res = "";
-    var monthName ="Tháng " +mm+"/"+yy;
+    var monthName ="Tháng "+mm+"/"+yy;
 
     switch ( settings.type ) {
       case 'month':
