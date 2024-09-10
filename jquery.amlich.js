@@ -521,6 +521,8 @@
       }
       res += '</tr>\n';
     }
+    res += '<tr>\n';
+    res += '</tr>\n';
     res += '</tbody>\n';
     res += '</table>\n';
     return res;
