@@ -196,7 +196,6 @@
     var m = mm+12*a-3;
     var jd = dd + INT((153*m+2)/5) + 365*y + INT(y/4) - INT(y/100) + INT(y/400) - 32045;
     return jd;
-    //return 367*yy - INT(7*(yy+INT((mm+9)/12))/4) - INT(3*(INT((yy+(mm-9)/7)/100)+1)/4) + INT(275*mm/9)+dd+1721029;
   }
 
   function jdn2date(jd) {
@@ -237,7 +236,7 @@
     solarNY = jdn(1, 1, yy);
     currentJD = solarNY+offsetOfTet;
     j = k >> 4;
-    for(i = 0; i < 12; i++) {
+    for(var i = 0; i < 12; i++) {
       regularMonths[12 - i - 1] = monthLengths[j & 0x1];
       j >>= 1;
     }
@@ -296,7 +295,7 @@
       i--;
     }
     var off = jd - ly[i].jd;
-    ret = new LunarDate(ly[i].day+off, ly[i].month, ly[i].year, ly[i].leap, jd);
+    var ret = new LunarDate(ly[i].day+off, ly[i].month, ly[i].year, ly[i].leap, jd);
     return ret;
   }
 
@@ -312,6 +311,48 @@
     }
     return findLunarDate(jd, ly);
   }
+  
+  // *** START: New function for Lunar to Solar conversion ***
+  function convertLunarToSolar(lunarDay, lunarMonth, lunarYear, isLeap) {
+    var yearInfo = getYearInfo(lunarYear);
+    var targetMonth = null;
+    
+    // Find the start date (JDN) of the target lunar month
+    for (var i = 0; i < yearInfo.length; i++) {
+        if (yearInfo[i].month === lunarMonth && yearInfo[i].leap === (isLeap ? 1 : 0)) {
+            targetMonth = yearInfo[i];
+            break;
+        }
+    }
+
+    if (!targetMonth) {
+        return null; // Invalid month (e.g., leap month in a non-leap year)
+    }
+
+    // Calculate month length to validate day
+    var nextMonthIndex = (yearInfo.indexOf(targetMonth) + 1);
+    var endJDN;
+    if (nextMonthIndex < yearInfo.length) {
+        endJDN = yearInfo[nextMonthIndex].jd;
+    } else {
+        // Last month of the year, get the Tet of the next year
+        var nextYearInfo = getYearInfo(lunarYear + 1);
+        if (nextYearInfo && nextYearInfo.length > 0) {
+            endJDN = nextYearInfo[0].jd;
+        } else {
+            return null; // Cannot determine next year's info
+        }
+    }
+    var monthLength = endJDN - targetMonth.jd;
+
+    if (lunarDay < 1 || lunarDay > monthLength) {
+        return null; // Invalid day for this month
+    }
+    
+    var targetJDN = targetMonth.jd + lunarDay - 1;
+    return jdn2date(targetJDN);
+  }
+  // *** END: New function for Lunar to Solar conversion ***
 
   function getMonth(mm, yy) {
     var ly1, ly2, tet1, jd1, jd2, mm1, yy1, result, i;
@@ -366,7 +407,7 @@
     dayName = CAN[(lunar.jd + 9) % 10] + " " + CHI[(lunar.jd+1)%12];
     monthName = CAN[(lunar.year*12+lunar.month+3) % 10] + " " + CHI[(lunar.month+1)%12];
     if (lunar.leap == 1) {
-      monthName += " (N)";
+      monthName += " (Nhuận)";
     }
     yearName = getYearCanChi(lunar.year);
     return new Array(dayName, monthName, yearName);
@@ -701,88 +742,7 @@
     res += '</td>\n';
     return res;
   }
-
-  $.fn.amLich = function( options ) {
-
-    settings = $.extend({
-      type: 'month',
-      tableWidth: '500px'
-    }, options );
-
-    var $this = this;
-
-    $this.on('click', 'td.ngaythang, td.homnay, td.tet, td.leam, td.leduong', function(e) {
-      e.preventDefault();
-      var data = $(this).attr('data-args');
-      if (data === undefined)
-        return false;
-      var args = data.split(','),
-          dd = parseInt(args[0]), mm = parseInt(args[1]), yy = parseInt(args[2]), leap = parseInt(args[3]),
-          jd = parseInt(args[4]), sday = parseInt(args[5]), smonth = parseInt(args[6]), syear = parseInt(args[7]),
-          lunar = new LunarDate(dd, mm, yy, leap, jd),
-          cc = getCanChi(lunar),
-          holiday = getHolodayString( sday, smonth, dd, mm );
-          s = '';
-      switch ( settings.type ) {
-        case 'year':
-        case 'month':
-          s += '◊ ' + getDayString(lunar, sday, smonth, syear) + ' âm lịch)\n';
-          s += '◊ Ngày '+cc[0]+', tháng '+cc[1]+', năm '+cc[2]+'\n';
-          s += '◊ Giờ đầu ngày '+(getCanHour0(jd)+' '+CHI[0])+'\n';
-          s += '◊ Tiết '+TIETKHI[getSunLongitude(jd + 1, 7.0)]+'\n';
-          s += '◊ Giờ hoàng đạo: ' + getGioHoangDao(jd) + '\n';
-          s += '◊ PL: ' + getPhatLich(dd, mm, yy) + '\n';
-          s += ( holiday != '' ? '◊ '+holiday : '' );
-          alert(s);
-          break;
-        case 'calendar':
-          $this.find('.calendar .calendar-month').html('Tháng '+smonth+' Năm '+syear);
-          $this.find('.calendar .calendar-day .day-num').html(sday);
-          $this.find('.calendar .calendar-day .day-tuan').html(TUAN[(jd + 1) % 7]);
-          $this.find('.calendar .lunar-day-num').html(dd);
-          $this.find('.calendar .lunar-month-name').html('Tháng '+THANG[mm-1]+(leap == 1 ? ' (N)' : ''));
-          $this.find('.calendar .lunar-year-name').html('<strong>'+cc[2]+'</strong>');
-          $this.find('.calendar .calendar-holiday').html((holiday!='' ? '<td colspan="2">'+holiday+'</td>' : ''));
-          $this.find('.calendar .calendar-hoangdao').html('Giờ hoàng đạo: '+getGioHoangDao(jd));
-          s += '<span>Ngày <strong>'+cc[0]+'</strong></span><br>\n';
-          s += '<span>Tháng <strong>'+cc[1]+'</strong></span><br>\n';
-          s += '<span>Giờ đầu <strong>'+(getCanHour0(jd)+' '+CHI[0])+'</strong></span><br>\n';
-          s += '<span>Tiết <strong>'+TIETKHI[getSunLongitude(jd + 1, 7.0)]+'</strong></span><br>';
-          s += '<span>PL: <strong>'+getPhatLich(dd, mm, yy)+'</strong></span>\n';
-          $this.find('.calendar .calendar-b-right').html(s);
-          break;
-      }
-    });
-
-    $this.on('click', 'a.prev-year, a.prev-month, a.next-month, a.next-year', function(e) {
-      e.preventDefault();
-      var yy = $(this).data('yy'),
-          mm = $(this).data('mm');
-      return $this.html( printMonth(mm, yy) );
-    });
-
-    $this.on('click', 'td.ngaytuan', function(e) {
-      e.preventDefault();
-      //alert(ABOUT);
-    });
-
-    switch ( settings.type ) {
-      case 'month':
-        return $this.html( printMonth(currentMonth, currentYear) );
-        break;
-      case 'year':
-        return $this.html( printYear(currentYear) );
-        break;
-      case 'calendar':
-        return $this.html( printMonth(currentMonth, currentYear) );
-        break;
-      case 'text':
-        return $this.html( getTodayString() );
-        break;
-      default:
-        break;
-    }
-
-  };
-
-})( jQuery );
+  
+  // *** START: New function to print converter UI ***
+  function printConverter() {
+    var html = '<h3>Công cụ chuyển đổi Lịch Âm-
