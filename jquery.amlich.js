@@ -1,7 +1,7 @@
 (function( $ ) {
 
   var settings = {},
-      ABOUT  = 'Âm lịch Việt Nam - Version 0.\n© 2004 Hồ Ngọc Đức [http://www.informatik.uni-leipzig.de/~duc/amlich/]',
+      ABOUT  = 'Âm lịch Việt Nam - Version 1.1 2025 ',
       TK13 = new Array(
         0x226da2, 0x4695d0, 0x3349dc, 0x5849b0, 0x42a4b0, 0x2aaab8, 0x506a50, 0x3ab540, 0x24bb44, 0x48ab6,
         0x3495b0, 0x205372, 0x464970, 0x2e64f9, 0x5454b0, 0x3e6a50, 0x296c57, 0x4c5ac0, 0x36ab60, 0x2386e,
