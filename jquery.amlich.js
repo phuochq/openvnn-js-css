@@ -196,7 +196,6 @@
     var m = mm+12*a-3;
     var jd = dd + INT((153*m+2)/5) + 365*y + INT(y/4) - INT(y/100) + INT(y/400) - 32045;
     return jd;
-    //return 367*yy - INT(7*(yy+INT((mm+9)/12))/4) - INT(3*(INT((yy+(mm-9)/7)/100)+1)/4) + INT(275*mm/9)+dd+1721029;
   }
 
   function jdn2date(jd) {
@@ -237,7 +236,7 @@
     solarNY = jdn(1, 1, yy);
     currentJD = solarNY+offsetOfTet;
     j = k >> 4;
-    for(i = 0; i < 12; i++) {
+    for(var i = 0; i < 12; i++) {
       regularMonths[12 - i - 1] = monthLengths[j & 0x1];
       j >>= 1;
     }
@@ -296,7 +295,7 @@
       i--;
     }
     var off = jd - ly[i].jd;
-    ret = new LunarDate(ly[i].day+off, ly[i].month, ly[i].year, ly[i].leap, jd);
+    var ret = new LunarDate(ly[i].day+off, ly[i].month, ly[i].year, ly[i].leap, jd);
     return ret;
   }
 
@@ -312,6 +311,48 @@
     }
     return findLunarDate(jd, ly);
   }
+  
+  // *** START: New function for Lunar to Solar conversion ***
+  function convertLunarToSolar(lunarDay, lunarMonth, lunarYear, isLeap) {
+    var yearInfo = getYearInfo(lunarYear);
+    var targetMonth = null;
+    
+    // Find the start date (JDN) of the target lunar month
+    for (var i = 0; i < yearInfo.length; i++) {
+        if (yearInfo[i].month === lunarMonth && yearInfo[i].leap === (isLeap ? 1 : 0)) {
+            targetMonth = yearInfo[i];
+            break;
+        }
+    }
+
+    if (!targetMonth) {
+        return null; // Invalid month (e.g., leap month in a non-leap year)
+    }
+
+    // Calculate month length to validate day
+    var nextMonthIndex = (yearInfo.indexOf(targetMonth) + 1);
+    var endJDN;
+    if (nextMonthIndex < yearInfo.length) {
+        endJDN = yearInfo[nextMonthIndex].jd;
+    } else {
+        // Last month of the year, get the Tet of the next year
+        var nextYearInfo = getYearInfo(lunarYear + 1);
+        if (nextYearInfo && nextYearInfo.length > 0) {
+            endJDN = nextYearInfo[0].jd;
+        } else {
+            return null; // Cannot determine next year's info
+        }
+    }
+    var monthLength = endJDN - targetMonth.jd;
+
+    if (lunarDay < 1 || lunarDay > monthLength) {
+        return null; // Invalid day for this month
+    }
+    
+    var targetJDN = targetMonth.jd + lunarDay - 1;
+    return jdn2date(targetJDN);
+  }
+  // *** END: New function for Lunar to Solar conversion ***
 
   function getMonth(mm, yy) {
     var ly1, ly2, tet1, jd1, jd2, mm1, yy1, result, i;
@@ -366,7 +407,7 @@
     dayName = CAN[(lunar.jd + 9) % 10] + " " + CHI[(lunar.jd+1)%12];
     monthName = CAN[(lunar.year*12+lunar.month+3) % 10] + " " + CHI[(lunar.month+1)%12];
     if (lunar.leap == 1) {
-      monthName += " (N)";
+      monthName += " (Nhuận)";
     }
     yearName = getYearCanChi(lunar.year);
     return new Array(dayName, monthName, yearName);
@@ -701,6 +742,52 @@
     res += '</td>\n';
     return res;
   }
+  
+  // *** START: New function to print converter UI ***
+  function printConverter() {
+    var html = '<h3>Công cụ chuyển đổi Lịch Âm-Dương</h3>';
+    html += '<div class="converter-form">';
+    // --- Options ---
+    html += '<div class="converter-options">';
+    html += '<label><input type="radio" name="conversion_type" value="solar_to_lunar" checked> Dương sang Âm</label>';
+    html += '<label><input type="radio" name="conversion_type" value="lunar_to_solar"> Âm sang Dương</label>';
+    html += '</div>';
+
+    // --- Solar to Lunar Inputs ---
+    html += '<div id="solar_input_group">';
+    html += '<span>Ngày dương:</span> <select id="solar_day">';
+    for(var i=1; i<=31; i++) html += '<option value="'+i+'">'+i+'</option>';
+    html += '</select>';
+    html += '<span>Tháng:</span> <select id="solar_month">';
+    for(var i=1; i<=12; i++) html += '<option value="'+i+'">'+i+'</option>';
+    html += '</select>';
+    html += '<span>Năm:</span> <select id="solar_year">';
+    for(var i=1900; i<=2100; i++) html += '<option value="'+i+'"'+(i === currentYear ? ' selected' : '')+'>'+i+'</option>';
+    html += '</select>';
+    html += '</div>';
+    
+    // --- Lunar to Solar Inputs ---
+    html += '<div id="lunar_input_group" style="display:none;">';
+    html += '<span>Ngày âm:</span> <select id="lunar_day">';
+    for(var i=1; i<=30; i++) html += '<option value="'+i+'">'+i+'</option>';
+    html += '</select>';
+    html += '<span>Tháng:</span> <select id="lunar_month">';
+    for(var i=1; i<=12; i++) html += '<option value="'+i+'">'+i+'</option>';
+    html += '</select>';
+    html += '<span>Năm:</span> <select id="lunar_year">';
+    for(var i=1900; i<=2100; i++) html += '<option value="'+i+'"'+(i === currentYear ? ' selected' : '')+'>'+i+'</option>';
+    html += '</select>';
+    html += '<label class="leap-month-label"><input type="checkbox" id="lunar_leap"> Tháng nhuận</label>';
+    html += '</div>';
+    
+    // --- Button and Result ---
+    html += '<button id="convert_button">Chuyển đổi</button>';
+    html += '<div id="conversion_result"></div>';
+    
+    html += '</div>';
+    return html;
+  }
+  // *** END: New function to print converter UI ***
 
   $.fn.amLich = function( options ) {
 
@@ -765,6 +852,62 @@
       e.preventDefault();
       //alert(ABOUT);
     });
+    
+    // *** START: Event handlers for the converter ***
+    $this.on('change', 'input[name="conversion_type"]', function() {
+        if ($(this).val() === 'solar_to_lunar') {
+            $('#solar_input_group').show();
+            $('#lunar_input_group').hide();
+        } else {
+            $('#solar_input_group').hide();
+            $('#lunar_input_group').show();
+        }
+        $('#conversion_result').html('');
+    });
+    
+    $this.on('click', '#convert_button', function() {
+        var type = $('input[name="conversion_type"]:checked').val();
+        var resultText = '';
+        
+        if (type === 'solar_to_lunar') {
+            var sDay = parseInt($('#solar_day').val());
+            var sMonth = parseInt($('#solar_month').val());
+            var sYear = parseInt($('#solar_year').val());
+            
+            // Basic validation for solar date
+            var d = new Date(sYear, sMonth - 1, sDay);
+            if (d.getFullYear() === sYear && d.getMonth() + 1 === sMonth && d.getDate() === sDay) {
+                var lunarDate = getLunarDate(sDay, sMonth, sYear);
+                resultText = 'Ngày ' + sDay + '/' + sMonth + '/' + sYear + ' (Dương lịch) là <br><strong>Ngày ' + lunarDate.day + ' tháng ' + lunarDate.month + ' năm ' + getYearCanChi(lunarDate.year) + ' (Âm lịch)</strong>';
+                if (lunarDate.leap) {
+                    resultText += ' <strong>(Tháng Nhuận)</strong>';
+                }
+            } else {
+                resultText = '<span style="color:red">Ngày dương lịch không hợp lệ!</span>';
+            }
+        } else { // lunar_to_solar
+            var lDay = parseInt($('#lunar_day').val());
+            var lMonth = parseInt($('#lunar_month').val());
+            var lYear = parseInt($('#lunar_year').val());
+            var isLeap = $('#lunar_leap').is(':checked');
+            
+            var solarDateArr = convertLunarToSolar(lDay, lMonth, lYear, isLeap);
+            
+            if (solarDateArr) {
+                var sDay = solarDateArr[0];
+                var sMonth = solarDateArr[1];
+                var sYear = solarDateArr[2];
+                var jd_temp = jdn(sDay, sMonth, sYear);
+                var dayOfWeek = TUAN[(jd_temp + 1) % 7];
+                
+                resultText = 'Ngày ' + lDay + ' tháng ' + lMonth + ' năm ' + getYearCanChi(lYear) + ' (Âm lịch)' + (isLeap ? ' Nhuận' : '') + ' là <br><strong>' + dayOfWeek + ', Ngày ' + sDay + '/' + sMonth + '/' + sYear + ' (Dương lịch)</strong>';
+            } else {
+                resultText = '<span style="color:red">Ngày âm lịch không hợp lệ! (Có thể tháng này không nhuận hoặc không đủ 30 ngày).</span>';
+            }
+        }
+        $('#conversion_result').html(resultText);
+    });
+    // *** END: Event handlers for the converter ***
 
     switch ( settings.type ) {
       case 'month':
@@ -779,6 +922,11 @@
       case 'text':
         return $this.html( getTodayString() );
         break;
+      // *** START: New case for converter ***
+      case 'converter':
+        return $this.html( printConverter() );
+        break;
+      // *** END: New case for converter ***
       default:
         break;
     }
